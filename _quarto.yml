@@ -1,0 +1,5 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - EVA2025-choosing-threshold-slides.pdf

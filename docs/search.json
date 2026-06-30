@@ -1,0 +1,198 @@
+[
+  {
+    "objectID": "BIRS_20260702.html#scientific-problem",
+    "href": "BIRS_20260702.html#scientific-problem",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Scientific problem",
+    "text": "Scientific problem\nIn Montréal, Société des transports de Montréal (STM) reports an average of 1,000 service interruptions per year lasting more than 5 minutes.\n\nCommon causes of disruptions include equipment failures, passenger incidents, track obstructions, and operational issues.\nThe concept of travel time is linked with the waiting time of the passengers.\nAccurate travel time prediction becomes particularly critical during the recovery phase following a disruption."
+  },
+  {
+    "objectID": "BIRS_20260702.html#disruption",
+    "href": "BIRS_20260702.html#disruption",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Disruption",
+    "text": "Disruption\n\nDisruptions occur unpredictably.\nEven after a disruption is officially resolved, service recovery may take a substantial amount of time.\nWe aim to predict waiting times during the recovery phase, along with suitable uncertainty quantification."
+  },
+  {
+    "objectID": "BIRS_20260702.html#layman-summary-of-motivation",
+    "href": "BIRS_20260702.html#layman-summary-of-motivation",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Layman summary of motivation",
+    "text": "Layman summary of motivation\nThe metro service is resuming following an incident.\n\nHow much longer until the next train arrives?"
+  },
+  {
+    "objectID": "BIRS_20260702.html#features-of-the-problem",
+    "href": "BIRS_20260702.html#features-of-the-problem",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Features of the problem",
+    "text": "Features of the problem\nThere are relatively few studies on urban metro networks compared to intercity railway systems.\nSome (unique) characteristics of the Montréal metro:\n\n\nThe metro system is a closed-loop in each direction (no overtaking).\nNo information about passenger flow in real-time.\nAbsence of schedule (only average frequency).\nOperational procedures for incidents depending on the time of the day, their duration and underlying cause."
+  },
+  {
+    "objectID": "BIRS_20260702.html#video-of-incident",
+    "href": "BIRS_20260702.html#video-of-incident",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Video of incident",
+    "text": "Video of incident"
+  },
+  {
+    "objectID": "BIRS_20260702.html#operational-protocols",
+    "href": "BIRS_20260702.html#operational-protocols",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Operational protocols",
+    "text": "Operational protocols\n\nTrains can be required to stop immediately at the nearest station.\nTrains can be permitted to continue their journey for several stations before being forced to stop.\nPost-disruption, trains are unevenly spaced, leading to train bunching.\nThis leads to passenger accumulation and increased waiting times."
+  },
+  {
+    "objectID": "BIRS_20260702.html#data-source-1---track-occupancy-data",
+    "href": "BIRS_20260702.html#data-source-1---track-occupancy-data",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Data source 1 - track occupancy data",
+    "text": "Data source 1 - track occupancy data\n\nMontréal metro uses a fixed block (sensor) signaling system.\nRail tracks (platforms and tunnels) are divided into blocks of variable length.\nSensors record occupation and release of a block.\n\n\n\nThe track occupancy data include timestamps (entry/exit), block and train identifiers.\nThese are used to reconstruct train journeys (including location and relative distance of all trains)."
+  },
+  {
+    "objectID": "BIRS_20260702.html#data-source-2---disruption-logs",
+    "href": "BIRS_20260702.html#data-source-2---disruption-logs",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Data source 2 - disruption logs",
+    "text": "Data source 2 - disruption logs\nA dataset of all the reported incidents.\nSTM records location, duration and beginning end of incidents, but\n\nnot all events are reported,\nthere are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data."
+  },
+  {
+    "objectID": "BIRS_20260702.html#metro-and-incidents",
+    "href": "BIRS_20260702.html#metro-and-incidents",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Metro and incidents",
+    "text": "Metro and incidents\n\n\n\n\n\n\n\n\n\n\n\n\nData are from 2018.\n\nOn the Green line:\n\naround 225 disruptions in each direction,\nlasting on average 11 minutes,\naffecting on average 7.5 trains."
+  },
+  {
+    "objectID": "BIRS_20260702.html#notation",
+    "href": "BIRS_20260702.html#notation",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Notation",
+    "text": "Notation\nWe model the travel time \\(Y_{i,j,k}(t)\\) of train \\(i\\) from origin station \\(j\\) to destination station \\(k\\) at time \\(t.\\)"
+  },
+  {
+    "objectID": "BIRS_20260702.html#decomposition-of-travel-time",
+    "href": "BIRS_20260702.html#decomposition-of-travel-time",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Decomposition of travel time",
+    "text": "Decomposition of travel time\n\\[\\underset{\\text{time}}{Y_{i,j,k}(t)} = \\underset{\\text{delay}}{D_{i,j}} + \\underset{\\text{journey}}{J_{i,j,k}(t)} + \\underset{\\vphantom{t}\\text{error}}{e_{i,j,k}}.\\]"
+  },
+  {
+    "objectID": "BIRS_20260702.html#delay-modelling",
+    "href": "BIRS_20260702.html#delay-modelling",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Delay modelling",
+    "text": "Delay modelling\n\nWe suppose that train operations are influenced by the presence of other trains ahead of them in the direction of travel,\n\\[\\begin{equation}\n    D_{i, j} = \\sum_{l = 1}^{D_{\\max}} \\gamma_{l, j} z_{i, j, l}. \\label{eq:delay}\n\\end{equation}\\]\nEffects \\(\\gamma_{l,j}\\) depend on distance ahead (up to \\(D_{\\max}=5\\) stations) and station.\n\n\n\n\\(z_{i,j,l}\\): is there is another train \\(l\\) stations ahead when train \\(i\\) was at station \\(j\\)."
+  },
+  {
+    "objectID": "BIRS_20260702.html#journey-modelling",
+    "href": "BIRS_20260702.html#journey-modelling",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Journey modelling",
+    "text": "Journey modelling\nJourney \\(J_{i,j,k}(t):\\) total time a train spends traversing both platforms and tunnel segments when traveling from origin \\(j\\) to destination \\(k\\) at time \\(t.\\)\nDecomposed as the sum of\n\ndwell times: the time a train remains stationary at intermediate stations \\(j+1, \\ldots, k-1,\\)\nrunning times: times required to travel between stations (through tunnels)."
+  },
+  {
+    "objectID": "BIRS_20260702.html#dwell-times-and-running-times-at-guy-concordia",
+    "href": "BIRS_20260702.html#dwell-times-and-running-times-at-guy-concordia",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Dwell times and running times at Guy-Concordia",
+    "text": "Dwell times and running times at Guy-Concordia\n\n\nRunning times exhibit relatively low variability because train speeds are tightly regulated by operational constraints."
+  },
+  {
+    "objectID": "BIRS_20260702.html#headways-and-travel-times",
+    "href": "BIRS_20260702.html#headways-and-travel-times",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Headways and travel times",
+    "text": "Headways and travel times\n\n\nBoth travel time and headway (temporal gap between two consecutive trains) vary significantly according to the time of the day.\n\nThe larger the headway between trains, the more passengers accumulate on the platforms at intermediate stations, leading to increased dwell times."
+  },
+  {
+    "objectID": "BIRS_20260702.html#journey-process",
+    "href": "BIRS_20260702.html#journey-process",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Journey process",
+    "text": "Journey process\nWe estimate median headway \\(\\widetilde{h}_{s}(t)\\) at station \\(s\\) and time \\(t\\) using a moving-window (since passenger flow varies over time of the day).\n\\[\\begin{align*}\n    J_{i, j, k}(t) = t_0 + \\underset{\\text{median travel time}}{\\widetilde{Y}_{j, k}(t)} + \\sum_{s = j + 1}^{k - 1} \\theta_s \\underset{\\substack{\\text{difference to}\\\\\\text{median headway}}}{[h_{i, s} - \\widetilde{h}_{s}(t)]}.\n\\end{align*}\\]\nFor every additional minute of prolonged headway at an intermediary station \\(s\\), the journey process increases by \\(\\theta_s.\\)"
+  },
+  {
+    "objectID": "BIRS_20260702.html#variance-specification",
+    "href": "BIRS_20260702.html#variance-specification",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Variance specification",
+    "text": "Variance specification\n\n\n\n\n\n\n\n\n\n\n\n\nTravel times consist of the sum of running times (mostly identical) and dwell times.\nIt seems reasonable to hypothesize that the variance increases linearly with the traveled distance, with \\(\\sigma^2= \\omega_0 + \\omega_1 (k-j).\\)"
+  },
+  {
+    "objectID": "BIRS_20260702.html#autocorrelation-structure",
+    "href": "BIRS_20260702.html#autocorrelation-structure",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Autocorrelation structure",
+    "text": "Autocorrelation structure\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTo account for the dependence between consecutive trains, we use a moving average (MA) that depend on the overlap in journey during post-disruption \\[\\Delta_i = (k-j)/(k-j') \\in [0,1),\\] between trains \\(i\\) and \\(i-1\\) for stations \\(j &lt; j' &lt; k.\\)\nThe error term is written as \\[e_{i,j,k} = \\rho_i\\varepsilon_{i-1, j',k} + \\varepsilon_{i, j,k}\\] with an exponential-type decay, \\[\\begin{align*}\n\\rho_i &= \\rho \\left\\{1 - \\exp\\!\\left(-\\lambda\\Delta_i\\right)\\right\\}.\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "BIRS_20260702.html#prediction",
+    "href": "BIRS_20260702.html#prediction",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Prediction",
+    "text": "Prediction\nThe model including delay, journey and error is \\[\\begin{align*}\n\\underbrace{Y_{i, j, k}(t)}_{\\text{travel time}} &=  \\underbrace{D_{i,j}}_{\\text{delay}} + \\underbrace{J_{i, j, k}(t)}_{\\text{journey}} + \\underbrace{\\rho_i\\varepsilon_{i-1, j', k} + \\varepsilon_{i, j, k}}_{\\text{error}}.\n\\end{align*}\\]\nThe unconditional predictive distribution is obtained by integrating out the latent innovation of the preceding train: \\[\\begin{align*}\np(y_{i,j,k})\n= \\int p\\!\\left(y_{i, j, k} \\mid \\varepsilon_{i-1, j', k} \\right)\np\\!\\left(\\varepsilon_{i-1, j', k}\\right) \\, \\mathrm{d}\\varepsilon_{i-1, j', k},\n\\end{align*}\\] which does not admit a closed-form expression."
+  },
+  {
+    "objectID": "BIRS_20260702.html#error-distribution",
+    "href": "BIRS_20260702.html#error-distribution",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Error distribution",
+    "text": "Error distribution\nWe consider three location-scale distributions for random errors \\(\\varepsilon_{i,j,k}.\\)\n\nnormal,\na skew-normal with skewness \\(\\alpha,\\)\na skew-\\(t\\) with skewness \\(\\alpha\\) and degrees of freedom \\(\\nu.\\)\n\nBoth skewed distributions have a mean and variance that are a function of the skewness \\(\\alpha\\) (and the degrees of freedom \\(\\nu\\) for the skew-\\(t\\))."
+  },
+  {
+    "objectID": "BIRS_20260702.html#distributional-assumption",
+    "href": "BIRS_20260702.html#distributional-assumption",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Distributional assumption",
+    "text": "Distributional assumption\n\nThere are several outliers and skewed residuals due to asymmetry: trains can run late, but not really cut on journey times.\n\n\n\nWe specify the skewness as a linear function \\(\\alpha=\\alpha_0 + (k-j)\\alpha_1.\\)"
+  },
+  {
+    "objectID": "BIRS_20260702.html#model-estimation-and-prediction",
+    "href": "BIRS_20260702.html#model-estimation-and-prediction",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Model estimation and prediction",
+    "text": "Model estimation and prediction\nWe work in the Bayesian framework and assign weak (e.g., truncated priors to have decreasing variance and skewness) or vague priors.\nWe generate posterior draws from the hierarchical model using Hamiltonian Monte Carlo (through Stan).\nPosterior predictive inference is carried out via simulation by jointly sampling the model parameters and latent errors.\nWe split the 21K time stamps by disruption into 90% training and 10% hold-out."
+  },
+  {
+    "objectID": "BIRS_20260702.html#posterior-of-delay",
+    "href": "BIRS_20260702.html#posterior-of-delay",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Posterior of delay",
+    "text": "Posterior of delay"
+  },
+  {
+    "objectID": "BIRS_20260702.html#posterior-of-parameters",
+    "href": "BIRS_20260702.html#posterior-of-parameters",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Posterior of parameters",
+    "text": "Posterior of parameters\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSkewness, scale and degree of freedom parameters."
+  },
+  {
+    "objectID": "BIRS_20260702.html#goodness-of-fit",
+    "href": "BIRS_20260702.html#goodness-of-fit",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Goodness-of-fit",
+    "text": "Goodness-of-fit"
+  },
+  {
+    "objectID": "BIRS_20260702.html#performance-metrics",
+    "href": "BIRS_20260702.html#performance-metrics",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Performance metrics",
+    "text": "Performance metrics\n\nThe skewed-\\(t\\) model has better coverage and also lower CRPS values."
+  },
+  {
+    "objectID": "BIRS_20260702.html#summary",
+    "href": "BIRS_20260702.html#summary",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Summary",
+    "text": "Summary\n\n\nWe examined the problem of predicting post-disruption travel times in an urban metro system.\nWe proposed a Bayesian hierarchical model that explicitly accounts for train interactions, headway imbalance due to disruption, and non-Gaussian features in travel time distributions.\nThe results provide evidence of meaningful error dependence between consecutive trains.\nPossible extensions include online forecasting setting, in which predictions are continuously updated as new real-time operational information becomes available."
+  },
+  {
+    "objectID": "BIRS_20260702.html#the-end",
+    "href": "BIRS_20260702.html#the-end",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "The end",
+    "text": "The end\nThank you for your attention. Questions?\n\n\nFinancial support:\n\n\n\n\n\n\n\n\n\n\nPreprint: arXiv:2602.19952"
+  }
+]
