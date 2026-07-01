@@ -1,31 +1,52 @@
 [
   {
-    "objectID": "BIRS_20260702.html#scientific-problem",
-    "href": "BIRS_20260702.html#scientific-problem",
+    "objectID": "BIRS_20260702.html#motivation",
+    "href": "BIRS_20260702.html#motivation",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Scientific problem",
-    "text": "Scientific problem\nIn Montréal, Société des transports de Montréal (STM) reports an average of 1,000 service interruptions per year lasting more than 5 minutes.\n\nCommon causes of disruptions include equipment failures, passenger incidents, track obstructions, and operational issues.\nThe concept of travel time is linked with the waiting time of the passengers.\nAccurate travel time prediction becomes particularly critical during the recovery phase following a disruption."
+    "section": "Motivation",
+    "text": "Motivation\nThe metro service is resuming following an incident.\n\nHow much longer until the next train arrives?"
   },
   {
-    "objectID": "BIRS_20260702.html#disruption",
-    "href": "BIRS_20260702.html#disruption",
+    "objectID": "BIRS_20260702.html#service-interruptions-in-the-metro",
+    "href": "BIRS_20260702.html#service-interruptions-in-the-metro",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Disruption",
-    "text": "Disruption\n\nDisruptions occur unpredictably.\nEven after a disruption is officially resolved, service recovery may take a substantial amount of time.\nWe aim to predict waiting times during the recovery phase, along with suitable uncertainty quantification."
+    "section": "Service interruptions in the metro",
+    "text": "Service interruptions in the metro\nSTM reports an average of 1K service interruptions lasting more than 5 minutes each year in the Montréal metro.\n\nCommon causes of disruptions include equipment failures, passenger incidents, track obstructions, and operational issues.\nAccurate travel time prediction becomes particularly critical during the recovery phase following a disruption."
   },
   {
-    "objectID": "BIRS_20260702.html#layman-summary-of-motivation",
-    "href": "BIRS_20260702.html#layman-summary-of-motivation",
+    "objectID": "BIRS_20260702.html#metro-and-incidents",
+    "href": "BIRS_20260702.html#metro-and-incidents",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Layman summary of motivation",
-    "text": "Layman summary of motivation\nThe metro service is resuming following an incident.\n\nHow much longer until the next train arrives?"
+    "section": "Metro and incidents",
+    "text": "Metro and incidents\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn 2018, on the Green line:\n\naround 225 disruptions in each direction,\nlasting on average 11 minutes,\naffecting on average 7.5 trains."
+  },
+  {
+    "objectID": "BIRS_20260702.html#data-source-1---track-occupancy-data",
+    "href": "BIRS_20260702.html#data-source-1---track-occupancy-data",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Data source 1 - track occupancy data",
+    "text": "Data source 1 - track occupancy data\n\nMontréal metro uses a fixed block (sensor) signaling system.\nRail tracks (platforms and tunnels) are divided into blocks of variable length.\nSensors record occupation and release of a block.\n\n\n\nThe track occupancy data include timestamps (entry/exit), block and train identifiers.\nThese are used to reconstruct train journeys (including location and relative distance of all trains)."
+  },
+  {
+    "objectID": "BIRS_20260702.html#data-source-2---disruption-logs",
+    "href": "BIRS_20260702.html#data-source-2---disruption-logs",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Data source 2 - disruption logs",
+    "text": "Data source 2 - disruption logs\nA dataset of all the reported incidents in 2018.\nSTM records location, duration and beginning end of incidents, but\n\nnot all events are reported,\nthere are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data."
+  },
+  {
+    "objectID": "BIRS_20260702.html#service-interruptions",
+    "href": "BIRS_20260702.html#service-interruptions",
+    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
+    "section": "Service interruptions",
+    "text": "Service interruptions\n\nDisruptions occur unpredictably.\nEven after an incident is officially resolved, service recovery may take a substantial amount of time.\nWe aim to predict waiting times during the recovery phase alongside uncertainty quantification."
   },
   {
     "objectID": "BIRS_20260702.html#features-of-the-problem",
     "href": "BIRS_20260702.html#features-of-the-problem",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
     "section": "Features of the problem",
-    "text": "Features of the problem\nThere are relatively few studies on urban metro networks compared to intercity railway systems.\nSome (unique) characteristics of the Montréal metro:\n\n\nThe metro system is a closed-loop in each direction (no overtaking).\nNo information about passenger flow in real-time.\nAbsence of schedule (only average frequency).\nOperational procedures for incidents depending on the time of the day, their duration and underlying cause."
+    "text": "Features of the problem\nThere are relatively few studies on urban metro networks compared to intercity railway systems.\nSome (unique) characteristics of the Montréal metro:\n\n\nThe metro system is a closed-loop (no overtaking).\nNo information about passenger flow in real-time.\nAbsence of schedule (only average frequency).\nOperational procedures for incidents depending on the time of the day, their duration and underlying cause."
   },
   {
     "objectID": "BIRS_20260702.html#video-of-incident",
@@ -40,27 +61,6 @@
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
     "section": "Operational protocols",
     "text": "Operational protocols\n\nTrains can be required to stop immediately at the nearest station.\nTrains can be permitted to continue their journey for several stations before being forced to stop.\nPost-disruption, trains are unevenly spaced, leading to train bunching.\nThis leads to passenger accumulation and increased waiting times."
-  },
-  {
-    "objectID": "BIRS_20260702.html#data-source-1---track-occupancy-data",
-    "href": "BIRS_20260702.html#data-source-1---track-occupancy-data",
-    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Data source 1 - track occupancy data",
-    "text": "Data source 1 - track occupancy data\n\nMontréal metro uses a fixed block (sensor) signaling system.\nRail tracks (platforms and tunnels) are divided into blocks of variable length.\nSensors record occupation and release of a block.\n\n\n\nThe track occupancy data include timestamps (entry/exit), block and train identifiers.\nThese are used to reconstruct train journeys (including location and relative distance of all trains)."
-  },
-  {
-    "objectID": "BIRS_20260702.html#data-source-2---disruption-logs",
-    "href": "BIRS_20260702.html#data-source-2---disruption-logs",
-    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Data source 2 - disruption logs",
-    "text": "Data source 2 - disruption logs\nA dataset of all the reported incidents.\nSTM records location, duration and beginning end of incidents, but\n\nnot all events are reported,\nthere are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data."
-  },
-  {
-    "objectID": "BIRS_20260702.html#metro-and-incidents",
-    "href": "BIRS_20260702.html#metro-and-incidents",
-    "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Metro and incidents",
-    "text": "Metro and incidents\n\n\n\n\n\n\n\n\n\n\n\n\nData are from 2018.\n\nOn the Green line:\n\naround 225 disruptions in each direction,\nlasting on average 11 minutes,\naffecting on average 7.5 trains."
   },
   {
     "objectID": "BIRS_20260702.html#notation",
@@ -98,11 +98,11 @@
     "text": "Dwell times and running times at Guy-Concordia\n\n\nRunning times exhibit relatively low variability because train speeds are tightly regulated by operational constraints."
   },
   {
-    "objectID": "BIRS_20260702.html#headways-and-travel-times",
-    "href": "BIRS_20260702.html#headways-and-travel-times",
+    "objectID": "BIRS_20260702.html#headways-and-travel-times-under-normal-operations",
+    "href": "BIRS_20260702.html#headways-and-travel-times-under-normal-operations",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
-    "section": "Headways and travel times",
-    "text": "Headways and travel times\n\n\nBoth travel time and headway (temporal gap between two consecutive trains) vary significantly according to the time of the day.\n\nThe larger the headway between trains, the more passengers accumulate on the platforms at intermediate stations, leading to increased dwell times."
+    "section": "Headways and travel times under normal operations",
+    "text": "Headways and travel times under normal operations\n\n\nBoth travel time and headway (temporal gap between two consecutive trains) vary significantly according to the time of the day.\n\nThe larger the headway between trains, the more passengers accumulate on the platforms at intermediate stations, leading to increased dwell times."
   },
   {
     "objectID": "BIRS_20260702.html#journey-process",
@@ -151,7 +151,7 @@
     "href": "BIRS_20260702.html#model-estimation-and-prediction",
     "title": "Bayesian Framework for Post-disruption Travel Time Prediction in Metro Networks",
     "section": "Model estimation and prediction",
-    "text": "Model estimation and prediction\nWe work in the Bayesian framework and assign weak (e.g., truncated priors to have decreasing variance and skewness) or vague priors.\nWe generate posterior draws from the hierarchical model using Hamiltonian Monte Carlo (through Stan).\nPosterior predictive inference is carried out via simulation by jointly sampling the model parameters and latent errors.\nWe split the 21K time stamps by disruption into 90% training and 10% hold-out."
+    "text": "Model estimation and prediction\nWe work in the Bayesian framework and assign weak or vague priors.\nWe generate posterior draws from the hierarchical model using Hamiltonian Monte Carlo (through Stan).\nPosterior predictive inference is carried out via simulation by jointly sampling the model parameters and latent errors.\nWe split the 21K time stamps by disruption into 90% training and 10% hold-out."
   },
   {
     "objectID": "BIRS_20260702.html#posterior-of-delay",

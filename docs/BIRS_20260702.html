@@ -143,28 +143,73 @@ Léo Belzile, HEC Montréal <br>Shayan Nazemi, Aurélie Labbe, Stefan Steiner, P
 
   <p class="date">Wednesday, July 1, 2026</p>
 </section>
-<section id="scientific-problem" class="slide level2">
-<h2>Scientific problem</h2>
-<p>In Montréal, <em>Société des transports de Montréal</em> (STM) reports an average of 1,000 service interruptions per year lasting more than 5 minutes.</p>
-<ul>
-<li>Common causes of disruptions include equipment failures, passenger incidents, track obstructions, and operational issues.</li>
-<li>The concept of travel time is linked with the waiting time of the passengers.</li>
-<li>Accurate travel time prediction becomes particularly critical during the recovery phase following a disruption.</li>
-</ul>
-</section>
-<section id="disruption" class="slide level2">
-<h2>Disruption</h2>
-<ul>
-<li>Disruptions occur unpredictably.</li>
-<li>Even after a disruption is officially resolved, service recovery may take a substantial amount of time.</li>
-<li>We aim to predict waiting times during the recovery phase, along with suitable <strong>uncertainty quantification</strong>.</li>
-</ul>
-</section>
-<section id="layman-summary-of-motivation" class="slide level2">
-<h2>Layman summary of motivation</h2>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
 <p>The metro service is resuming following an incident.</p>
 
 <img data-src="figures/metro_low.png" class="quarto-figure quarto-figure-center r-stretch" width="300"><p>How much longer until the next train arrives?</p>
+</section>
+<section id="service-interruptions-in-the-metro" class="slide level2">
+<h2>Service interruptions in the metro</h2>
+<p>STM reports an average of 1K service interruptions lasting more than 5 minutes each year in the Montréal metro.</p>
+<ul>
+<li>Common causes of disruptions include equipment failures, passenger incidents, track obstructions, and operational issues.</li>
+<li>Accurate travel time prediction becomes particularly critical during the recovery phase following a disruption.</li>
+</ul>
+</section>
+<section id="metro-and-incidents" class="slide level2">
+<h2>Metro and incidents</h2>
+<div class="columns">
+<div class="column" style="width:65%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/map.png" class="quarto-figure quarto-figure-center" style="width:120.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:35%;">
+<div style="font-size: 0.8em;">
+<p>In 2018, on the Green line:</p>
+<ul>
+<li>around 225 disruptions in each direction,</li>
+<li>lasting on average 11 minutes,</li>
+<li>affecting on average 7.5 trains.</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="data-source-1---track-occupancy-data" class="slide level2 smaller">
+<h2>Data source 1 - track occupancy data</h2>
+<ul>
+<li>Montréal metro uses a fixed block (sensor) signaling system.</li>
+<li>Rail tracks (platforms and tunnels) are divided into blocks of variable length.</li>
+<li>Sensors record occupation and release of a block.</li>
+</ul>
+
+<img data-src="figures/fig2_tikz.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><ul>
+<li>The track occupancy data include timestamps (entry/exit), block and train identifiers.</li>
+<li>These are used to reconstruct train journeys (including location and relative distance of all trains).</li>
+</ul>
+</section>
+<section id="data-source-2---disruption-logs" class="slide level2">
+<h2>Data source 2 - disruption logs</h2>
+<p>A dataset of all the reported incidents in 2018.</p>
+<p>STM records location, duration and beginning end of incidents, but</p>
+<ul>
+<li>not all events are reported,</li>
+<li>there are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data.</li>
+</ul>
+</section>
+<section id="service-interruptions" class="slide level2">
+<h2>Service interruptions</h2>
+<ul>
+<li>Disruptions occur unpredictably.</li>
+<li>Even after an incident is officially resolved, service recovery may take a substantial amount of time.</li>
+<li>We aim to predict waiting times during the recovery phase alongside <strong>uncertainty quantification</strong>.</li>
+</ul>
 </section>
 <section id="features-of-the-problem" class="slide level2">
 <h2>Features of the problem</h2>
@@ -172,7 +217,7 @@ Léo Belzile, HEC Montréal <br>Shayan Nazemi, Aurélie Labbe, Stefan Steiner, P
 <p>Some (unique) characteristics of the Montréal metro:</p>
 <div style="font-size: 0.9em;">
 <ul>
-<li>The metro system is a closed-loop in each direction (no overtaking).</li>
+<li>The metro system is a closed-loop (no overtaking).</li>
 <li>No information about passenger flow in real-time.</li>
 <li>Absence of schedule (only average frequency).</li>
 <li>Operational procedures for incidents depending on the time of the day, their duration and underlying cause.</li>
@@ -190,53 +235,6 @@ Léo Belzile, HEC Montréal <br>Shayan Nazemi, Aurélie Labbe, Stefan Steiner, P
 <li>Post-disruption, trains are unevenly spaced, leading to train bunching.</li>
 <li>This leads to passenger accumulation and increased waiting times.</li>
 </ul>
-</section>
-<section id="data-source-1---track-occupancy-data" class="slide level2 smaller">
-<h2>Data source 1 - track occupancy data</h2>
-<ul>
-<li>Montréal metro uses a fixed block (sensor) signaling system.</li>
-<li>Rail tracks (platforms and tunnels) are divided into blocks of variable length.</li>
-<li>Sensors record occupation and release of a block.</li>
-</ul>
-
-<img data-src="figures/fig2_tikz.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><ul>
-<li>The track occupancy data include timestamps (entry/exit), block and train identifiers.</li>
-<li>These are used to reconstruct train journeys (including location and relative distance of all trains).</li>
-</ul>
-</section>
-<section id="data-source-2---disruption-logs" class="slide level2">
-<h2>Data source 2 - disruption logs</h2>
-<p>A dataset of all the reported incidents.</p>
-<p>STM records location, duration and beginning end of incidents, but</p>
-<ul>
-<li>not all events are reported,</li>
-<li>there are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data.</li>
-</ul>
-</section>
-<section id="metro-and-incidents" class="slide level2">
-<h2>Metro and incidents</h2>
-<div class="columns">
-<div class="column" style="width:65%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/map.png" class="quarto-figure quarto-figure-center" style="width:120.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:35%;">
-<p>Data are from 2018.</p>
-<div style="font-size: 0.8em;">
-<p>On the Green line:</p>
-<ul>
-<li>around 225 disruptions in each direction,</li>
-<li>lasting on average 11 minutes,</li>
-<li>affecting on average 7.5 trains.</li>
-</ul>
-</div>
-</div></div>
 </section>
 <section id="notation" class="slide level2">
 <h2>Notation</h2>
@@ -278,8 +276,8 @@ Léo Belzile, HEC Montréal <br>Shayan Nazemi, Aurélie Labbe, Stefan Steiner, P
 <p>Running times exhibit relatively low variability because train speeds are tightly regulated by operational constraints.</p>
 </div>
 </section>
-<section id="headways-and-travel-times" class="slide level2">
-<h2>Headways and travel times</h2>
+<section id="headways-and-travel-times-under-normal-operations" class="slide level2">
+<h2>Headways and travel times under normal operations</h2>
 
 <img data-src="figures/headway_eda.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><div style="font-size: 0.8em;">
 <p>Both travel time and headway (temporal gap between two consecutive trains) vary significantly according to the time of the day.</p>
@@ -374,7 +372,7 @@ p\!\left(\varepsilon_{i-1, j', k}\right) \, \mathrm{d}\varepsilon_{i-1, j', k},
 </section>
 <section id="model-estimation-and-prediction" class="slide level2">
 <h2>Model estimation and prediction</h2>
-<p>We work in the Bayesian framework and assign weak (e.g., truncated priors to have decreasing variance and skewness) or vague priors.</p>
+<p>We work in the Bayesian framework and assign weak or vague priors.</p>
 <p>We generate posterior draws from the hierarchical model using Hamiltonian Monte Carlo (through <strong>Stan</strong>).</p>
 <p>Posterior predictive inference is carried out via simulation by jointly sampling the model parameters and latent errors.</p>
 <p>We split the 21K time stamps by disruption into 90% training and 10% hold-out.</p>

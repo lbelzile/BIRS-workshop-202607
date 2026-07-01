@@ -46,25 +46,8 @@ knitr::opts_chunk$set(fig.retina = 3, collapse = TRUE)
 options(digits = 3, width = 75)
 ```
 
-## Scientific problem
 
-In Montréal, *Société des transports de Montréal* (STM) reports an average of 1,000 service interruptions per year lasting more than 5 minutes.
-
-- Common causes of disruptions include equipment failures, passenger incidents,
-track obstructions, and operational issues.
-- The concept of travel time is linked with the waiting time of the passengers.
-- Accurate travel time prediction becomes particularly critical during the recovery
-phase following a disruption.
-
-## Disruption
-
-- Disruptions occur unpredictably.
-- Even after a disruption is officially resolved, service recovery may take a
-substantial amount of time.
-- We aim to predict waiting times during the recovery phase, along with suitable **uncertainty quantification**.
-
-
-## Layman summary of motivation
+## Motivation
 
 The metro service is resuming following an incident.
 
@@ -76,56 +59,14 @@ knitr::include_graphics("figures/metro_low.png")
 How much longer until the next train arrives?
 
 
-## Features of the problem
+## Service interruptions in the metro
 
-There are relatively few studies on urban metro networks compared to intercity railway systems.
+STM reports an average of 1K service interruptions lasting more than 5 minutes each year in the Montréal metro.
 
-Some (unique) characteristics of the Montréal metro:
-
-::: {style="font-size: 0.9em;"}
-
-- The metro system is a closed-loop in each direction (no overtaking).
-- No information about passenger flow in real-time.
-- Absence of schedule (only average frequency). 
-- Operational procedures for incidents depending on the time of the day, their duration and underlying cause.
-
-::: 
-
-## Video of incident {background-video="figures/video.mp4"}
-
-## Operational protocols
-
-
-- Trains can be required to stop immediately at the nearest station.
-- Trains can be permitted to continue their journey for several stations before being forced to stop.
-- Post-disruption, trains are unevenly spaced, leading to train bunching.
-- This leads to passenger accumulation and increased waiting times.
-
-
-
-## Data source 1 - track occupancy data {.smaller}
-
-- Montréal metro uses a fixed block (sensor) signaling system. 
-- Rail tracks (platforms and tunnels) are divided into blocks of variable length.
-- Sensors record occupation and release of a block.
-
-```{r}
-#| out-width: "100%"
-#| fig-align: "center"
-knitr::include_graphics("figures/fig2_tikz.png")
-```
-
-- The track occupancy data include timestamps (entry/exit), block and train identifiers.
-- These are used to reconstruct train journeys (including location and relative distance of all trains).
-
-## Data source 2 - disruption logs
-
-A dataset of all the reported incidents. 
-
-STM records location, duration and beginning end of incidents, but
-
-- not all events are reported,
-- there are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data.
+- Common causes of disruptions include equipment failures, passenger incidents,
+track obstructions, and operational issues.
+- Accurate travel time prediction becomes particularly critical during the recovery
+phase following a disruption.
 
 
 ## Metro and incidents
@@ -145,10 +86,9 @@ knitr::include_graphics("figures/map.png")
 
 ::: {.column width="35%"}
 
-Data are from 2018.
 
 ::: {style="font-size: 0.8em;"}
-On the Green line:
+In 2018, on the Green line:
 
 - around 225 disruptions in each direction,
 - lasting on average 11 minutes, 
@@ -158,6 +98,67 @@ On the Green line:
 
 :::
 ::::
+
+
+## Data source 1 - track occupancy data {.smaller}
+
+- Montréal metro uses a fixed block (sensor) signaling system. 
+- Rail tracks (platforms and tunnels) are divided into blocks of variable length.
+- Sensors record occupation and release of a block.
+
+```{r}
+#| out-width: "100%"
+#| fig-align: "center"
+knitr::include_graphics("figures/fig2_tikz.png")
+```
+
+- The track occupancy data include timestamps (entry/exit), block and train identifiers.
+- These are used to reconstruct train journeys (including location and relative distance of all trains).
+
+## Data source 2 - disruption logs
+
+A dataset of all the reported incidents in 2018. 
+
+STM records location, duration and beginning end of incidents, but
+
+- not all events are reported,
+- there are some inaccuracies (resolution times, locations): we fix these using timestamps of track occupancy data.
+
+
+
+
+
+## Service interruptions
+
+- Disruptions occur unpredictably.
+- Even after an incident is officially resolved, service recovery may take a
+substantial amount of time.
+- We aim to predict waiting times during the recovery phase alongside **uncertainty quantification**.
+
+## Features of the problem
+
+There are relatively few studies on urban metro networks compared to intercity railway systems.
+
+Some (unique) characteristics of the Montréal metro:
+
+::: {style="font-size: 0.9em;"}
+
+- The metro system is a closed-loop (no overtaking).
+- No information about passenger flow in real-time.
+- Absence of schedule (only average frequency). 
+- Operational procedures for incidents depending on the time of the day, their duration and underlying cause.
+
+::: 
+
+## Video of incident {background-video="figures/video.mp4"}
+
+## Operational protocols
+
+
+- Trains can be required to stop immediately at the nearest station.
+- Trains can be permitted to continue their journey for several stations before being forced to stop.
+- Post-disruption, trains are unevenly spaced, leading to train bunching.
+- This leads to passenger accumulation and increased waiting times.
 
 
 
@@ -233,7 +234,7 @@ Running times exhibit relatively low variability because train speeds are tightl
 
 :::
 
-## Headways and travel times
+## Headways and travel times under normal operations
 
 ```{r}
 #| out-width: "100%"
@@ -368,7 +369,7 @@ We specify the skewness as a linear function $\alpha=\alpha_0 + (k-j)\alpha_1.$
 
 ## Model estimation and prediction
 
-We work in the Bayesian framework and assign weak (e.g., truncated priors to have decreasing variance and skewness) or vague priors.
+We work in the Bayesian framework and assign weak or vague priors.
 
 We generate posterior draws from the hierarchical model using Hamiltonian Monte Carlo (through **Stan**).
 
